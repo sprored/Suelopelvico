@@ -2,15 +2,12 @@ package com.example.sprocket.suelopelvico;
 
 import android.media.MediaPlayer;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-
-import java.net.URI;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void exitApp(View view){
+    public void exitApp(View view) {
         if (Build.VERSION.SDK_INT >= 21)
             finishAndRemoveTask();
         else
