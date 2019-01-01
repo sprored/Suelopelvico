@@ -21,19 +21,23 @@ public class MainActivity extends AppCompatActivity {
     Handler handler = new Handler();
     int state = 0;
     int counter = 0;
+
+    // Start runableCode
     private Runnable runnableCode = new Runnable() {
+//        private MediaPlayer mediaPlayer;
+        private MediaPlayer mpContract;
+        private MediaPlayer mpRelax;
+        private MediaPlayer mpFinal;
 
         @Override
         public void run() {
             // Change screen
             TextView textViewMain = (TextView) findViewById(R.id.main_display);
             TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
-            MediaPlayer mpContraction = MediaPlayer.create(getApplicationContext(), R.raw.contract);
-            MediaPlayer mpRelaxation = MediaPlayer.create(getApplicationContext(), R.raw.relax);
-            MediaPlayer mpFinal = MediaPlayer.create(getApplicationContext(), R.raw.final_sound);
 
             if ((state == RELAXATION) && (counter < TOTAL_TURNS)) {
-                mpContraction.start();
+                mpContract = MediaPlayer.create(getApplicationContext(), R.raw.contract);
+                mpContract.start();
                 state = CONTRACTION;
                 counter = counter + 1;
                 textViewMain.setText(R.string.contraction_message);
@@ -42,25 +46,20 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(runnableCode, CONTRACTION_SECONDS * 1000);
 
             } else if ((state == CONTRACTION) && (counter < TOTAL_TURNS)) {
-                mpRelaxation.start();
+                mpRelax = MediaPlayer.create(getApplicationContext(), R.raw.relax);
+                mpRelax.start();
                 state = RELAXATION;
                 textViewMain.setText(R.string.relaxation_message);
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.relaxColor));
                 handler.postDelayed(runnableCode, RELAXATION_SECONDS * 1000);
 
             } else {
+                mpFinal = MediaPlayer.create(getApplicationContext(), R.raw.final_sound);
                 mpFinal.start();
                 textViewMain.setText(R.string.end_message);
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
-                mpContraction.release();
-                mpContraction = null;
-                mpRelaxation.release();
-                mpRelaxation = null;
-                mpFinal = null;
             }
-
         }
-
     };
 
     @Override
@@ -73,10 +72,48 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private Runnable runnableCodeContract = new Runnable() {
+//        private MediaPlayer mpContract;
+
+        @Override
+        public void run() {
+            // Change screen
+        }};
+
+    private Runnable runnableCodeRelax = new Runnable() {
+//        private MediaPlayer mpRelax;
+
+        @Override
+        public void run() {
+            // Change screen
+        }};
 
     public void startCounter(View view) {
         handler.postDelayed(runnableCode, 1000);
+        for (int i = 0; i > TOTAL_TURNS -1; i++) {
 
+            /**
+             *   textViewMain.setText(R.string.contraction_message);
+             *   textViewMain.setBackgroundColor(getResources().getColor(R.color.contractionColor));
+             *   textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + counter + " / " + TOTAL_TURNS);
+             *   handler.postDelayed(runnableCodeRelax, CONTRACTION_SECONDS * 1000);
+             *
+             *   textViewMain.setText(R.string.relaxation_message);
+             *   textViewMain.setBackgroundColor(getResources().getColor(R.color.relaxColor));
+             *   handler.postDelayed(runnableCodeContract, RELAXATION_SECONDS * 1000);
+             */
+        }
+        /**
+         *   textViewMain.setText(R.string.contraction_message);
+         *   textViewMain.setBackgroundColor(getResources().getColor(R.color.contractionColor));
+         *   textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + counter + " / " + TOTAL_TURNS);
+         *   handler.postDelayed(runnableCodeRelax, CONTRACTION_SECONDS * 1000);
+
+         *  mpFinal = MediaPlayer.create(getApplicationContext(), R.raw.final_sound);
+         *  mpFinal.start();
+         *  textViewMain.setText(R.string.end_message);
+         *  textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
+         */
     }
 
     public void exitApp(View view) {
