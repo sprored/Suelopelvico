@@ -24,10 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Start runableCode
     private Runnable runnableCode = new Runnable() {
-//        private MediaPlayer mediaPlayer;
-        private MediaPlayer mpContract;
-        private MediaPlayer mpRelax;
-        private MediaPlayer mpFinal;
+        private MediaPlayer mediaPlayer;
 
         @Override
         public void run() {
@@ -36,8 +33,14 @@ public class MainActivity extends AppCompatActivity {
             TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
 
             if ((state == RELAXATION) && (counter < TOTAL_TURNS)) {
-                mpContract = MediaPlayer.create(getApplicationContext(), R.raw.contract);
-                mpContract.start();
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.contract);
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mediaPlayer.release();
+                    }
+                });
                 state = CONTRACTION;
                 counter = counter + 1;
                 textViewMain.setText(R.string.contraction_message);
@@ -46,16 +49,28 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(runnableCode, CONTRACTION_SECONDS * 1000);
 
             } else if ((state == CONTRACTION) && (counter < TOTAL_TURNS)) {
-                mpRelax = MediaPlayer.create(getApplicationContext(), R.raw.relax);
-                mpRelax.start();
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.relax);
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mediaPlayer.release();
+                    }
+                });
                 state = RELAXATION;
                 textViewMain.setText(R.string.relaxation_message);
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.relaxColor));
                 handler.postDelayed(runnableCode, RELAXATION_SECONDS * 1000);
 
             } else {
-                mpFinal = MediaPlayer.create(getApplicationContext(), R.raw.final_sound);
-                mpFinal.start();
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.final_sound);
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mediaPlayer.release();
+                    }
+                });
                 textViewMain.setText(R.string.end_message);
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
             }
