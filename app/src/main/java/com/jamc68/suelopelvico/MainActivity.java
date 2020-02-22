@@ -1,10 +1,10 @@
-package com.example.sprocket.suelopelvico;
+package com.jamc68.suelopelvico;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;

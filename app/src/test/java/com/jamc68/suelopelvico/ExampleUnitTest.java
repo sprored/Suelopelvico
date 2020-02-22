@@ -1,4 +1,4 @@
-package com.example.sprocket.suelopelvico;
+package com.jamc68.suelopelvico;
 
 import org.junit.Test;
 
