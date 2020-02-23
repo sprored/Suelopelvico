@@ -89,21 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private Runnable runnableCodeContract = new Runnable() {
-//        private MediaPlayer mpContract;
 
-        @Override
-        public void run() {
-            // Change screen
-        }};
-
-    private Runnable runnableCodeRelax = new Runnable() {
-//        private MediaPlayer mpRelax;
-
-        @Override
-        public void run() {
-            // Change screen
-        }};
 
     public void startCounter(View view) {
         handler.postDelayed(runnableCode, 1000);
