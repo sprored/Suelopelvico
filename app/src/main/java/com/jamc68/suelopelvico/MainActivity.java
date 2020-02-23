@@ -1,6 +1,7 @@
 package com.jamc68.suelopelvico;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,19 +11,25 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    // Fields
+    int totalMinutes = 10;
+    int turnCounter = 0;
 
+    // States
     final int RELAXATION = 0;
-    final int RELAXATION_SECONDS = 12;
     final int CONTRACTION = 1;
+
+    // Timer constants
+    final int RELAXATION_SECONDS = 12;
     final int CONTRACTION_SECONDS = 6;
-    final int TOTAL_MINUTES = 10;
-    final int TOTAL_TURNS = (TOTAL_MINUTES * 60) / (CONTRACTION_SECONDS + RELAXATION_SECONDS);
+    final int TOTAL_TURNS = (totalMinutes * 60) / (CONTRACTION_SECONDS + RELAXATION_SECONDS);
+
+
 
     Handler handler = new Handler();
-    int state = 0;
-    int counter = 0;
+    int state = RELAXATION;
 
-    // Start runableCode
+    // Start runnableCode
     private Runnable runnableCode = new Runnable() {
         private MediaPlayer mediaPlayer;
 
@@ -32,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             TextView textViewMain = (TextView) findViewById(R.id.main_display);
             TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
 
-            if ((state == RELAXATION) && (counter < TOTAL_TURNS)) {
+            if ((state == RELAXATION) && (turnCounter < TOTAL_TURNS)) {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.contract);
                 mediaPlayer.start();
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -42,14 +49,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 state = CONTRACTION;
-                counter = counter + 1;
+                turnCounter = turnCounter + 1;
                 textViewMain.setText(R.string.contraction_message);
                 textViewMain.setTextColor(getResources().getColor(R.color.secondaryTextColor));
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.contractionColor));
-                textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + counter + " / " + TOTAL_TURNS);
+                textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + turnCounter + " / " + TOTAL_TURNS);
                 handler.postDelayed(runnableCode, CONTRACTION_SECONDS * 1000);
 
-            } else if ((state == CONTRACTION) && (counter < TOTAL_TURNS)) {
+            } else if ((state == CONTRACTION) && (turnCounter < TOTAL_TURNS)) {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.relax);
                 mediaPlayer.start();
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -79,45 +86,11 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
-        textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + counter + " / " + TOTAL_TURNS);
-
-    }
-
-
 
     public void startCounter(View view) {
         handler.postDelayed(runnableCode, 1000);
-        for (int i = 0; i > TOTAL_TURNS -1; i++) {
-
-            /**
-             *   textViewMain.setText(R.string.contraction_message);
-             *   textViewMain.setBackgroundColor(getResources().getColor(R.color.contractionColor));
-             *   textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + counter + " / " + TOTAL_TURNS);
-             *   handler.postDelayed(runnableCodeRelax, CONTRACTION_SECONDS * 1000);
-             *
-             *   textViewMain.setText(R.string.relaxation_message);
-             *   textViewMain.setBackgroundColor(getResources().getColor(R.color.relaxColor));
-             *   handler.postDelayed(runnableCodeContract, RELAXATION_SECONDS * 1000);
-             */
-        }
-        /**
-         *   textViewMain.setText(R.string.contraction_message);
-         *   textViewMain.setBackgroundColor(getResources().getColor(R.color.contractionColor));
-         *   textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + counter + " / " + TOTAL_TURNS);
-         *   handler.postDelayed(runnableCodeRelax, CONTRACTION_SECONDS * 1000);
-
-         *  mpFinal = MediaPlayer.create(getApplicationContext(), R.raw.final_sound);
-         *  mpFinal.start();
-         *  textViewMain.setText(R.string.end_message);
-         *  textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
-         */
     }
+
 
     public void exitApp(View view) {
         if (Build.VERSION.SDK_INT >= 21)
@@ -127,4 +100,16 @@ public class MainActivity extends AppCompatActivity {
         System.exit(0);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        ExerciseSession session = new ExerciseSession();
+
+        TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
+        textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + turnCounter + " / " + TOTAL_TURNS);
+
+    }
 }
