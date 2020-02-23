@@ -3,7 +3,7 @@
     <string name="app_name">Suelo pelvico</string>
     <string name="secondary_message">Ronda</string>
     <string name="contraction_message">¡Contrae!</string>
-    <string name="relaxation_message">Relaja ...</string>
+    <string name="relaxation_message">Relaja...</string>
     <string name="end_message">Fin del ejercicio</string>
     <string name="button_text">Adelante</string>
     <string name="info_message">Toca el \nbotón \npara empezar</string>

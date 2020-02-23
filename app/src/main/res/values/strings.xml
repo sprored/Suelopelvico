@@ -4,7 +4,7 @@
     <string name="info_message">Click on \nplay\nto start</string>
     <string name="secondary_message">Turn </string>
     <string name="contraction_message">Contract!</string>
-    <string name="relaxation_message">Relax ...</string>
+    <string name="relaxation_message">Relax...</string>
     <string name="end_message">End of exercise</string>
 
     <string name="button_text">Play</string>

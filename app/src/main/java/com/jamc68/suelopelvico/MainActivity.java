@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 state = CONTRACTION;
                 counter = counter + 1;
                 textViewMain.setText(R.string.contraction_message);
+                textViewMain.setTextColor(getResources().getColor(R.color.secondaryTextColor));
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.contractionColor));
                 textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + counter + " / " + TOTAL_TURNS);
                 handler.postDelayed(runnableCode, CONTRACTION_SECONDS * 1000);
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 });
                 state = RELAXATION;
                 textViewMain.setText(R.string.relaxation_message);
+                textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.relaxColor));
                 handler.postDelayed(runnableCode, RELAXATION_SECONDS * 1000);
 
