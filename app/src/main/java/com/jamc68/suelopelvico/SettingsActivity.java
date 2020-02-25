@@ -20,7 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    // Is this really necesary?
+    // Is this really necessary?
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

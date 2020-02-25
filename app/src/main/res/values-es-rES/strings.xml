@@ -8,9 +8,9 @@
     <string name="button_settings">Opciones</string>
     <string name="info_message">Toca \npara empezar</string>
     <string name="button_exit">Salir</string>
-    <string name="settings_menu">Preferencias</string>
-    <string name="help">Ayuda</string>
     <string name="total_exercise_time">Minutos totales de ejercicio:</string>
     <string name="contraction_time">Contracciçon en segundos:</string>
     <string name="rest_time">Descanso en segundos:</string>
+    <string name="action_settings">Preferencias</string>
+    <string name="action_help">Ayuda</string>
 </resources>

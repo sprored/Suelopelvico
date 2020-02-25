@@ -24,12 +24,29 @@
         android:inputType="number"
         android:summary="6"
         android:title="@string/rest_time" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="check_box_preference_1"
+        android:summaryOff="Sound off"
+        android:summaryOn="Sound on"
+        android:title="Sound" />
     <SwitchPreference
         android:defaultValue="false"
         android:key="switch_preference_1"
-        android:summaryOff="Volume off"
-        android:summaryOn="Volume on"
-        android:title="Volume on/off" />
+        android:summaryOff="Turns"
+        android:summaryOn="Minutes"
+        android:title="Show minutes" />
 
+    <Preference
+        android:selectable="false"
+        android:summary="\@string/summary_about" />
 
+    <Preference
+        android:summary="\@string/app_version"
+        android:title="\@string/title_version" />
+
+    <Preference
+        android:key="\@string/key_send_feedback"
+        android:summary="\@string/summary_support"
+        android:title="\@string/title_send_feedback" />
 </PreferenceScreen>
