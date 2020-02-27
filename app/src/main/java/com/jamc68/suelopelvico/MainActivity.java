@@ -3,8 +3,10 @@ package com.jamc68.suelopelvico;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,14 +16,80 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Fields
+    private static int turnCounter = 0;
+    Handler handler = new Handler();
+
+    // Start runnableCode
+    boolean state = ExerciseData.isRELAXED();
+    Runnable runnableExerciseSession = new Runnable() {
+        private MediaPlayer mediaPlayer;
+
+        @Override
+        public void run() {
+            // Change screen
+            TextView textViewMain = (TextView) findViewById(R.id.main_display);
+            TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
+
+            if ((state == ExerciseData.isRELAXED()) && (turnCounter < ExerciseData.getTOTAL_TURNS())) {
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.contract);
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mediaPlayer.release();
+                    }
+                });
+                state = ExerciseData.isCONTRACTED();
+                turnCounter = turnCounter + 1;
+                textViewMain.setText(R.string.contraction_message);
+                textViewMain.setTextColor(getResources().getColor(R.color.secondaryTextColor));
+                textViewMain.setBackgroundColor(getResources().getColor(R.color.contractionColor));
+                //textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + turnCounter + " / " + ExerciseData.getTOTAL_TURNS());
+                textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + turnCounter + " / " + ExerciseData.getTOTAL_TURNS());
+                handler.postDelayed(runnableExerciseSession, ExerciseData.getCONTRACTION_SECONDS() * 1000);
+
+            } else if ((state == ExerciseData.isCONTRACTED()) && (turnCounter < ExerciseData.getTOTAL_TURNS())) {
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.relax);
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mediaPlayer.release();
+                    }
+                });
+                state = ExerciseData.isRELAXED();
+                textViewMain.setText(R.string.relaxation_message);
+                textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
+                textViewMain.setBackgroundColor(getResources().getColor(R.color.relaxColor));
+                handler.postDelayed(runnableExerciseSession, ExerciseData.getRELAXATION_SECONDS() * 1000);
+
+            } else {
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.final_sound);
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mediaPlayer.release();
+                    }
+                });
+                textViewMain.setText(R.string.end_message);
+                textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
+            }
+        }
+    };
+
 
     public void startCounter(View view) {
-      Intent startExerciseSession = new Intent(this, ExerciseSession.class);
-        startActivity(startExerciseSession);
+        handler.postDelayed(runnableExerciseSession, 1000);
     }
 
+    public void pauseCounter(View view) {
+        handler.removeCallbacks(runnableExerciseSession);
+    }
 
     public void exitApp(View view) {
+        handler.removeCallbacks(runnableExerciseSession);
         if (Build.VERSION.SDK_INT >= 21) {
             finishAndRemoveTask();
         } else {
@@ -65,3 +133,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
+
