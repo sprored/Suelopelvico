@@ -7,7 +7,7 @@ import androidx.core.app.NavUtils;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class SettingsActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

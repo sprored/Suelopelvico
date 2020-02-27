@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_settings:
-                Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
+                Intent startSettingsActivity = new Intent(this, MenuActivity.class);
                 startActivity(startSettingsActivity);
                 return true;
             case R.id.action_help:
