@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
                 textViewMain.setText(R.string.contraction_message);
                 textViewMain.setTextColor(getResources().getColor(R.color.secondaryTextColor));
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.contractionColor));
-                //textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + turnCounter + " / " + ExerciseData.getTOTAL_TURNS());
-                textViewSecondary.setText( getText(R.string.secondary_message) + " " + turnCounter + " / " + ExerciseData.getTOTAL_TURNS());
+                textViewSecondary.setText(
+                        getString(R.string.secondary_message, turnCounter, ExerciseData.getTOTAL_TURNS()));
                 handler.postDelayed(runnableExerciseSession, ExerciseData.getCONTRACTION_SECONDS() * 1000);
 
             } else if ((state == !isRelaxed) && (turnCounter < ExerciseData.getTOTAL_TURNS())) {
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
         textViewSecondary.setText(ExerciseData.getTOTAL_TURNS() + " " + getText(R.string.secondary_message));
-
+        textViewSecondary.setText(getString(R.string.secundary_intro_message,ExerciseData.getTotalMinutes() ));
     }
 }
 

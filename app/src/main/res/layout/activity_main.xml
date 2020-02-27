@@ -8,7 +8,6 @@
     android:background="@color/backgroundApp"
     tools:context=".MainActivity">
 
-
     <Button
         android:id="@+id/main_display"
         android:onClick="startCounter"
@@ -55,6 +54,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:elevation="16dp"
+        android:background="@color/primaryLightColor"
         android:onClick="pauseCounter"
         android:text="@string/button_pause"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,6 +72,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:elevation="16dp"
+        android:background="@color/primaryLightColor"
         android:onClick="exitApp"
         android:text="@string/button_exit"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -79,6 +80,5 @@
         app:layout_constraintStart_toEndOf="@+id/button_settings"
         app:layout_constraintTop_toBottomOf="@+id/secondary_display"
         app:layout_constraintVertical_bias="0.419" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
