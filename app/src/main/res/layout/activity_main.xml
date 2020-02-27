@@ -21,7 +21,7 @@
         android:background="@color/primaryLightColor"
         android:elevation="16dp"
         android:gravity="center"
-        android:text="@string/info_message"
+        android:text="@string/primary_intro_message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"

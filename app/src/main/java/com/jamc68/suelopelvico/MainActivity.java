@@ -18,10 +18,11 @@ public class MainActivity extends AppCompatActivity {
 
     // Fields
     private static int turnCounter = 0;
+    private static final boolean isRelaxed = true;
     Handler handler = new Handler();
 
     // Start runnableCode
-    boolean state = ExerciseData.isRELAXED();
+    boolean state = isRelaxed;
     Runnable runnableExerciseSession = new Runnable() {
         private MediaPlayer mediaPlayer;
 
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             TextView textViewMain = (TextView) findViewById(R.id.main_display);
             TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
 
-            if ((state == ExerciseData.isRELAXED()) && (turnCounter < ExerciseData.getTOTAL_TURNS())) {
+            if ((state == isRelaxed) && (turnCounter < ExerciseData.getTOTAL_TURNS())) {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.contract);
                 mediaPlayer.start();
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -40,16 +41,16 @@ public class MainActivity extends AppCompatActivity {
                         mediaPlayer.release();
                     }
                 });
-                state = ExerciseData.isCONTRACTED();
+                state = !isRelaxed;
                 turnCounter = turnCounter + 1;
                 textViewMain.setText(R.string.contraction_message);
                 textViewMain.setTextColor(getResources().getColor(R.color.secondaryTextColor));
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.contractionColor));
                 //textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + turnCounter + " / " + ExerciseData.getTOTAL_TURNS());
-                textViewSecondary.setText((String) getText(R.string.secondary_message) + " " + turnCounter + " / " + ExerciseData.getTOTAL_TURNS());
+                textViewSecondary.setText( getText(R.string.secondary_message) + " " + turnCounter + " / " + ExerciseData.getTOTAL_TURNS());
                 handler.postDelayed(runnableExerciseSession, ExerciseData.getCONTRACTION_SECONDS() * 1000);
 
-            } else if ((state == ExerciseData.isCONTRACTED()) && (turnCounter < ExerciseData.getTOTAL_TURNS())) {
+            } else if ((state == !isRelaxed) && (turnCounter < ExerciseData.getTOTAL_TURNS())) {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.relax);
                 mediaPlayer.start();
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                         mediaPlayer.release();
                     }
                 });
-                state = ExerciseData.isRELAXED();
+                state = isRelaxed;
                 textViewMain.setText(R.string.relaxation_message);
                 textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.relaxColor));
