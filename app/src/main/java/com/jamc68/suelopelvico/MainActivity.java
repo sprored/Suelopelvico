@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void startCounter(View view) {
-        Intent startExerciseSession = new Intent(this, ExerciseSession.class);
+      Intent startExerciseSession = new Intent(this, ExerciseSession.class);
         startActivity(startExerciseSession);
     }
 
@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
-        textViewSecondary.setText(ExerciseSession.getTOTAL_TURNS() + " " + getText(R.string.secondary_message));
+        textViewSecondary.setText(ExerciseData.getTOTAL_TURNS() + " " + getText(R.string.secondary_message));
 
     }
 }
