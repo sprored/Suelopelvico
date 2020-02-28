@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity  {
                         mediaPlayer.release();
                     }
                 });
+                handler.removeCallbacksAndMessages(null);
                 textViewMain.setText(R.string.end_message);
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
             }
