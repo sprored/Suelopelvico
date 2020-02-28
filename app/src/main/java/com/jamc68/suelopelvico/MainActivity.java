@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static int totalMinutes = 10;
     private static final int RELAXATION_SECONDS = 12;
     private static final int CONTRACTION_SECONDS = 6;
@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences setupSharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
     }
+
+
 
     // Fields for runnable code
     private static int turnCounter = 0;
@@ -143,6 +145,11 @@ public class MainActivity extends AppCompatActivity {
 
         TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
         textViewSecondary.setText(getString(R.string.secundary_intro_message,totalMinutes ));
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        //
     }
 }
 

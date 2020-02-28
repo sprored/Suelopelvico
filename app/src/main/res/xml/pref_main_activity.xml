@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
         android:defaultValue="Default value"
-        android:key="edit_text_preference_1"
+        android:key="@string/key_total_time_int"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:inputType="number"
@@ -10,7 +10,7 @@
         android:title="@string/total_exercise_time" />
     <EditTextPreference
         android:defaultValue="Default value"
-        android:key="edit_text_preference_2"
+        android:key="@string/key_contraction_seconds_int"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:inputType="number"
@@ -18,7 +18,7 @@
         android:title="@string/contraction_time" />
     <EditTextPreference
         android:defaultValue="Default value"
-        android:key="edit_text_preference_3"
+        android:key="@string/key_rest_time_int"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:inputType="number"
@@ -26,13 +26,13 @@
         android:title="@string/rest_time" />
     <CheckBoxPreference
         android:defaultValue="true"
-        android:key="check_box_preference_1"
+        android:key="@string/key_sound_on_off"
         android:summaryOff="Sound off"
         android:summaryOn="Sound on"
         android:title="Sound" />
     <SwitchPreference
         android:defaultValue="false"
-        android:key="switch_preference_1"
+        android:key="@string/key_switch_mins_turns"
         android:summaryOff="Turns"
         android:summaryOn="Minutes"
         android:title="Show minutes" />
