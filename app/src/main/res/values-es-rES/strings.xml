@@ -8,11 +8,7 @@
     <string name="button_pause">Pausa</string>
     <string name="primary_intro_message">Toca \npara empezar</string>
     <string name="button_exit">Salir</string>
-    <string name="total_exercise_time">Minutos totales de ejercicio:</string>
-    <string name="contraction_time">Contracciçon en segundos:</string>
-    <string name="rest_time">Descanso en segundos:</string>
     <string name="action_settings">Preferencias</string>
-    <string name="action_help">Ayuda</string>
     <string name="exercise_session">Exercise Session</string>
     <string name="secundary_intro_message">%1$d minutos</string>
 </resources>

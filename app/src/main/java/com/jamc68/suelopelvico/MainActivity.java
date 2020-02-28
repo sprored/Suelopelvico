@@ -16,17 +16,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class MainActivity extends AppCompatActivity  {
     private static int totalMinutes = 10;
     private static final int RELAXATION_SECONDS = 12;
     private static final int CONTRACTION_SECONDS = 6;
-
-    private void setupSharedPreferences() {
-        // Get all of the values from shared preferences to set it up
-        SharedPreferences setupSharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-    }
-
 
 
     // Fields for runnable code
@@ -113,29 +106,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_settings:
-                Intent startSettingsActivity = new Intent(this, MenuActivity.class);
-                startActivity(startSettingsActivity);
-                return true;
-            case R.id.action_help:
-                //showHelp();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,9 +117,5 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         textViewSecondary.setText(getString(R.string.secundary_intro_message,totalMinutes ));
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        //
-    }
 }
 
