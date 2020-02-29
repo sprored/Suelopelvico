@@ -32,6 +32,12 @@ public class MainActivity extends AppCompatActivity  {
     boolean state = isRelaxed;
     Runnable runnableExerciseSession = new Runnable() {
         private MediaPlayer mediaPlayer;
+        private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mediaPlayer.release();
+            }
+        };
 
         @Override
         public void run() {
@@ -42,12 +48,7 @@ public class MainActivity extends AppCompatActivity  {
             if ((state == isRelaxed) && (turnCounter < TOTAL_TURNS)) {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.contract);
                 mediaPlayer.start();
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        mediaPlayer.release();
-                    }
-                });
+                mediaPlayer.setOnCompletionListener(mCompletionListener);
                 state = !isRelaxed;
                 turnCounter = turnCounter + 1;
                 textViewMain.setText(R.string.contraction_message);
@@ -60,12 +61,7 @@ public class MainActivity extends AppCompatActivity  {
             } else if ((state == !isRelaxed) && (turnCounter < TOTAL_TURNS)) {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.relax);
                 mediaPlayer.start();
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        mediaPlayer.release();
-                    }
-                });
+                mediaPlayer.setOnCompletionListener(mCompletionListener);
                 state = isRelaxed;
                 textViewMain.setText(R.string.relaxation_message);
                 textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
@@ -75,13 +71,7 @@ public class MainActivity extends AppCompatActivity  {
             } else {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.final_sound);
                 mediaPlayer.start();
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        mediaPlayer.release();
-                    }
-                });
-                handler.removeCallbacksAndMessages(null);
+                mediaPlayer.setOnCompletionListener(mCompletionListener);
                 textViewMain.setText(R.string.end_message);
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
             }
