@@ -6,6 +6,7 @@
     <string name="contraction_message">Contract!</string>
     <string name="relaxation_message">Relax...</string>
     <string name="end_message">End of exercise</string>
+    <string name="pause_message">tap to continue</string>
 
     <string name="button_pause">Pause</string>
     <string name="button_exit">Quit</string>
