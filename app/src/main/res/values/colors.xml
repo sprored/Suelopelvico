@@ -13,7 +13,7 @@
 
     <color name="colorAccent">#935a28</color>
     <color name="introColor">#cfd8dc</color>
-    <color name="backgroundApp">#fcfbd7</color>
+    <color name="backgroundApp">#fcfde9</color>
     <color name="contractionColor">#fc0303</color>
     <color name="relaxColor">#76ff03</color>
 </resources>

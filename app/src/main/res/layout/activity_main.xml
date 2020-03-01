@@ -18,7 +18,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="40dp"
         android:background="@color/primaryLightColor"
-        android:elevation="24dp"
+        android:elevation="32dp"
         android:gravity="center"
         android:text="@string/primary_intro_message"
         app:layout_constraintBottom_toBottomOf="parent"

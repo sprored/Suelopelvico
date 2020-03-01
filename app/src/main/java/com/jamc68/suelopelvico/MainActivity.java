@@ -188,6 +188,9 @@ public class MainActivity extends AppCompatActivity  {
     protected void onPause() {
         super.onPause();
         mediaPlayer.release();
+        //TODO: Save turnCounter and date. Restore:
+        // If same day -> form saved pause;
+        // else -> from shared prefs
     }
 
     @Override
