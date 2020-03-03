@@ -59,11 +59,12 @@ public class MainActivity extends AppCompatActivity  {
         }
     };
 
+
     //fields for exercise time management
     private static int totalMinutes = 10;
     private static final int RELAXATION_SECONDS = 12;
     private static final int CONTRACTION_SECONDS = 6;
-
+    private boolean exerciseStarted = false;
 
     // Fields for runnable code
     private static int turnCounter = 0;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity  {
             TextView textViewMain = (TextView) findViewById(R.id.main_display);
             TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
 
+            // Starting Contraction
             if ((state == isRelaxed) && (turnCounter < TOTAL_TURNS)) {
                 // Request audio focus with a short amount of time
                 // with AUDIOFOCUS_GAIN_TRANSIENT.
@@ -101,6 +103,7 @@ public class MainActivity extends AppCompatActivity  {
                     // media player once the sound has finished playing.
                     mediaPlayer.setOnCompletionListener(mCompletionListener);
                 }
+
                 state = !isRelaxed;
                 turnCounter = turnCounter + 1;
                 textViewMain.setText(R.string.contraction_message);
@@ -108,8 +111,10 @@ public class MainActivity extends AppCompatActivity  {
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.contractionColor));
                 textViewSecondary.setText(
                         getString(R.string.secondary_message, turnCounter, TOTAL_TURNS));
+
                 handler.postDelayed(runnableExerciseSession, CONTRACTION_SECONDS * 1000);
 
+                // Starting Rest
             } else if ((state == !isRelaxed) && (turnCounter < TOTAL_TURNS)) {
                 // Request audio focus with a short amount of time
                 // with AUDIOFOCUS_GAIN_TRANSIENT.
@@ -133,8 +138,10 @@ public class MainActivity extends AppCompatActivity  {
                 textViewMain.setText(R.string.relaxation_message);
                 textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.relaxColor));
+
                 handler.postDelayed(runnableExerciseSession, RELAXATION_SECONDS * 1000);
 
+                // Final step
             } else {
                 // Request audio focus with a short amount of time
                 // with AUDIOFOCUS_GAIN_TRANSIENT.
@@ -159,19 +166,23 @@ public class MainActivity extends AppCompatActivity  {
             }
         }
     };
+    // End of runnable
 
 
     public void startCounter(View view) {
+        exerciseStarted = true;
         handler.postDelayed(runnableExerciseSession, 1000);
     }
 
     public void pauseCounter(View view) {
-        handler.removeCallbacks(runnableExerciseSession);
-        TextView textViewMain = (TextView) findViewById(R.id.main_display);
-        textViewMain.setText(getText(R.string.pause_message).toString());
-        textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
-        textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
-        onPause();
+        if (exerciseStarted) {
+            handler.removeCallbacks(runnableExerciseSession);
+            TextView textViewMain = (TextView) findViewById(R.id.main_display);
+            textViewMain.setText(getText(R.string.pause_message).toString());
+            textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
+            textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
+            onPause();
+        }
     }
 
     public void exitApp(View view) {
@@ -197,13 +208,13 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // To keep the screen from sleeping
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
         textViewSecondary.setText(getString(R.string.secundary_intro_message,totalMinutes ));
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
     }
 
 }
