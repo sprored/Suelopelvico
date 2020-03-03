@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="key_total_time"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:inputType="number"
+        android:summary="10"
+        android:title="@string/total_exercise_time" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="key_contraction_time"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:inputType="number"
+        android:summary="12"
+        android:title="@string/contraction_time" />
+    <EditTextPreference
+        android:defaultValue="Default value"
+        android:key="key_rest_time"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:inputType="number"
+        android:summary="6"
+        android:title="@string/rest_time" />
+    <SeekBarPreference
+        android:defaultValue="true"
+        android:key="key_volume"
+        android:summaryOff="Sound off"
+        android:summaryOn="Sound on"
+        android:title="Sound" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="switch_preference_1"
+        android:summaryOff="Turns"
+        android:summaryOn="Minutes"
+        android:title="Show minutes" />
+
+</PreferenceScreen>

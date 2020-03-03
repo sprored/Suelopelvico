@@ -9,8 +9,10 @@
     <string name="primary_intro_message">Toca \npara empezar</string>
     <string name="button_exit">Salir</string>
     <string name="action_settings">Preferencias</string>
-    <string name="exercise_session">Exercise Session</string>
-    <string name="secundary_intro_message">%1$d minutos</string>
+    <string name="secondary_intro_message">%1$d minutos</string>
     <string name="pause_message">toca para continuar</string>
     <string name="action_help">Ayuda</string>
+    <string name="total_exercise_time">Tiempo total (minutos)</string>
+    <string name="contraction_time">Contracción (segundos)</string>
+    <string name="rest_time">Descanso (segundos)</string>
 </resources>

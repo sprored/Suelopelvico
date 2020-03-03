@@ -10,8 +10,6 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.SpannableString;
-import android.text.style.RelativeSizeSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -228,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
-        textViewSecondary.setText(getString(R.string.secundary_intro_message, totalMinutes));
+        textViewSecondary.setText(getString(R.string.secondary_intro_message, totalMinutes));
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
