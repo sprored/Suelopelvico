@@ -1,8 +1,10 @@
 package com.jamc68.suelopelvico;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -10,11 +12,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
     // Fields for audio management
     private MediaPlayer mediaPlayer;
@@ -185,6 +190,29 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_settings:
+                Intent startMenuActivity = new Intent(this, MenuActivity.class);
+                startActivity(startMenuActivity);
+                return true;
+            case R.id.action_help:
+                //showHelp();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_menu, menu);
+        return true;
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         mediaPlayer.release();
@@ -200,7 +228,7 @@ public class MainActivity extends AppCompatActivity  {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
-        textViewSecondary.setText(getString(R.string.secundary_intro_message,totalMinutes ));
+        textViewSecondary.setText(getString(R.string.secundary_intro_message, totalMinutes));
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
