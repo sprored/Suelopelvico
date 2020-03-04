@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
     // Fields for audio management
     private MediaPlayer mediaPlayer;
@@ -151,39 +151,6 @@ public class MainActivity extends AppCompatActivity  {
         handler.postDelayed(runnableExerciseSession, 1000);
     }
 
-    public void pauseCounter(View view) {
-        if (exerciseRunning) {
-            handler.removeCallbacks(runnableExerciseSession);
-            TextView textViewMain = (TextView) findViewById(R.id.main_display);
-            textViewMain.setText(getText(R.string.pause_message).toString());
-            textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
-            textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
-            exerciseRunning = false;
-            onPause();
-        }
-    }
-
-/*    public void exitApp(View view) {
-        //Android's design does not favor exiting an application by choice,
-        // but rather manages it by the OS. You can bring up the Home application
-        // by its corresponding Intent:
-        handler.removeCallbacks(runnableExerciseSession);
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }*/
-
-    public void exitApp(View view) {
-        handler.removeCallbacks(runnableExerciseSession);
-        if (Build.VERSION.SDK_INT >= 21) {
-            finishAndRemoveTask();
-        } else {
-            finish();
-            System.exit(0);
-        }
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -201,9 +168,48 @@ public class MainActivity extends AppCompatActivity  {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
-        textViewSecondary.setText(getString(R.string.secundary_intro_message,totalMinutes ));
+        textViewSecondary.setText(getString(R.string.secundary_intro_message, totalMinutes));
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+
+        ////////// Find the View that shows the pause message
+        TextView pauseApp = (TextView) findViewById(R.id.button_pause);
+        // Set a click listener on that View
+        pauseApp.setOnClickListener(new View.OnClickListener() {
+            // The code in this method will be executed when the numbers category is clicked on.
+            @Override
+            public void onClick(View view) {
+                if (exerciseRunning) {
+                    handler.removeCallbacks(runnableExerciseSession);
+                    TextView textViewMain = (TextView) findViewById(R.id.main_display);
+                    textViewMain.setText(getText(R.string.pause_message).toString());
+                    textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
+                    textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
+                    exerciseRunning = false;
+                    onPause();
+                }
+            }
+        }); ///////////// END OF pauseApp.setOnClickListener
+
+
+        ///////// Find the View that shows the exit message
+        TextView exitApp = (TextView) findViewById(R.id.button_exit);
+        // Set a click listener on that View
+        exitApp.setOnClickListener(new View.OnClickListener() {
+            // The code in this method will be executed when the numbers category is clicked on.
+            @Override
+            public void onClick(View view) {
+                handler.removeCallbacks(runnableExerciseSession);
+                if (Build.VERSION.SDK_INT >= 21) {
+                    finishAndRemoveTask();
+                } else {
+                    finish();
+                    System.exit(0);
+                }
+            }
+        }); ///////////// END OF exitApp.setOnClickListener
+
     }
 
 }
