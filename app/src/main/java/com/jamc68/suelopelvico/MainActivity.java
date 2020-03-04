@@ -3,13 +3,12 @@ package com.jamc68.suelopelvico;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.SpannableString;
-import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity  {
     private static int totalMinutes = 10;
     private static final int RELAXATION_SECONDS = 12;
     private static final int CONTRACTION_SECONDS = 6;
-    private boolean exerciseStarted = false;
+    private boolean exerciseRunning = false;
 
     // Fields for runnable code
     private static int turnCounter = 0;
@@ -116,22 +115,11 @@ public class MainActivity extends AppCompatActivity  {
 
                 // Starting Rest
             } else if ((state == !isRelaxed) && (turnCounter < TOTAL_TURNS)) {
-                // Request audio focus with a short amount of time
-                // with AUDIOFOCUS_GAIN_TRANSIENT.
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
                         AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    // We have audio focus now.
-
-                    // Create and setup the MediaPlayer for the audio resource associated
-                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.relax);
-
-                    // Start the audio file
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.final_sound);
                     mediaPlayer.start();
-
-                    // Setup a listener on the media player, so that we can stop and release the
-                    // media player once the sound has finished playing.
                     mediaPlayer.setOnCompletionListener(mCompletionListener);
                 }
                 state = isRelaxed;
@@ -143,22 +131,11 @@ public class MainActivity extends AppCompatActivity  {
 
                 // Final step
             } else {
-                // Request audio focus with a short amount of time
-                // with AUDIOFOCUS_GAIN_TRANSIENT.
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
                         AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    // We have audio focus now.
-
-                    // Create and setup the MediaPlayer for the audio resource associated
                     mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.final_sound);
-
-                    // Start the audio file
                     mediaPlayer.start();
-
-                    // Setup a listener on the media player, so that we can stop and release the
-                    // media player once the sound has finished playing.
                     mediaPlayer.setOnCompletionListener(mCompletionListener);
                 }
                 textViewMain.setText(R.string.end_message);
@@ -170,20 +147,32 @@ public class MainActivity extends AppCompatActivity  {
 
 
     public void startCounter(View view) {
-        exerciseStarted = true;
+        exerciseRunning = true;
         handler.postDelayed(runnableExerciseSession, 1000);
     }
 
     public void pauseCounter(View view) {
-        if (exerciseStarted) {
+        if (exerciseRunning) {
             handler.removeCallbacks(runnableExerciseSession);
             TextView textViewMain = (TextView) findViewById(R.id.main_display);
             textViewMain.setText(getText(R.string.pause_message).toString());
             textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
             textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
+            exerciseRunning = false;
             onPause();
         }
     }
+
+/*    public void exitApp(View view) {
+        //Android's design does not favor exiting an application by choice,
+        // but rather manages it by the OS. You can bring up the Home application
+        // by its corresponding Intent:
+        handler.removeCallbacks(runnableExerciseSession);
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }*/
 
     public void exitApp(View view) {
         handler.removeCallbacks(runnableExerciseSession);
