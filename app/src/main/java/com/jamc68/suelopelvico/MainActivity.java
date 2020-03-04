@@ -1,8 +1,10 @@
 package com.jamc68.suelopelvico;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -142,8 +144,23 @@ public class MainActivity extends AppCompatActivity {
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
             }
         }
-    };
-    // End of runnable
+    };/////////////////////// End of runnable
+
+
+    private void showExitDialog(Context context) {
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setTitle("Exit the App")
+                .setMessage("Do you really want to exit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //String task = String.valueOf(taskEditText.getText());
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
+    }/////////////////////// End of showExitDialog
 
 
     public void startCounter(View view) {
