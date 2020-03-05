@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private static int turnCounter = 0;
     private static final boolean isRelaxed = true;
     private static final int TOTAL_TURNS = (totalMinutes * 60) / (CONTRACTION_SECONDS + RELAXATION_SECONDS);
-
+    private static boolean hasStarted = false;
     Handler handler = new Handler();
 
     // Start runnableCode
@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void run() {
+            hasStarted = true;
             // Change screen
             TextView textViewMain = (TextView) findViewById(R.id.main_display);
             TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
@@ -202,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                     textViewButton.setText(getText(R.string.button_exit));
                     textViewButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                     onPause();
-                } else {
+                } else if (hasStarted){
                     handler.removeCallbacks(runnableExerciseSession);
                     if (Build.VERSION.SDK_INT >= 21) {
                         finishAndRemoveTask();
