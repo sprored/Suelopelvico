@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -13,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer.release();
             }
         }
-    };
+    };////////////////////////////// End of Audio Manager Focus
 
 
-    //fields for exercise time management
+    // Fields for exercise time management
     private static int totalMinutes = 10;
     private static final int RELAXATION_SECONDS = 12;
     private static final int CONTRACTION_SECONDS = 6;
@@ -144,29 +144,9 @@ public class MainActivity extends AppCompatActivity {
                 textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
             }
         }
-    };/////////////////////// End of runnable
+    };/////////////////////// End of runnable //////////////////////////////////////
 
 
-    private void showExitDialog(Context context) {
-        AlertDialog dialog = new AlertDialog.Builder(context)
-                .setTitle("Exit the App")
-                .setMessage("Do you really want to exit?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //String task = String.valueOf(taskEditText.getText());
-                    }
-                })
-                .setNegativeButton("Cancel", null)
-                .create();
-        dialog.show();
-    }/////////////////////// End of showExitDialog
-
-
-    public void startCounter(View view) {
-        exerciseRunning = true;
-        handler.postDelayed(runnableExerciseSession, 1000);
-    }
 
     @Override
     protected void onPause() {
@@ -189,11 +169,25 @@ public class MainActivity extends AppCompatActivity {
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
+        ////////// Find the main view with the start message
+        TextView mainDisplayTextView = (TextView) findViewById(R.id.main_display);
+        // Set a click listener on that View
+        mainDisplayTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exerciseRunning = true;
+                handler.postDelayed(runnableExerciseSession, 1000);
+                TextView pauseQuitButton = (TextView) findViewById(R.id.button_pause_quit);
+                pauseQuitButton.setText(getResources().getString(R.string.button_pause));
+                pauseQuitButton.setBackgroundColor(getResources().getColor(R.color.primaryLightColor));
+            }
+        });
+
 
         ////////// Find the View that shows the pause message
-        TextView pauseApp = (TextView) findViewById(R.id.button_pause);
+        TextView pauseQuitButton = (TextView) findViewById(R.id.button_pause_quit);
         // Set a click listener on that View
-        pauseApp.setOnClickListener(new View.OnClickListener() {
+        pauseQuitButton.setOnClickListener(new View.OnClickListener() {
             // The code in this method will be executed when the numbers category is clicked on.
             @Override
             public void onClick(View view) {
@@ -204,30 +198,21 @@ public class MainActivity extends AppCompatActivity {
                     textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
                     textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
                     exerciseRunning = false;
+                    TextView textViewButton = (Button) findViewById(R.id.button_pause_quit);
+                    textViewButton.setText(getText(R.string.button_exit));
+                    textViewButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                     onPause();
-                }
-            }
-        }); ///////////// END OF pauseApp.setOnClickListener
-
-
-        ///////// Find the View that shows the exit message
-        TextView exitApp = (TextView) findViewById(R.id.button_exit);
-        // Set a click listener on that View
-        exitApp.setOnClickListener(new View.OnClickListener() {
-            // The code in this method will be executed when the numbers category is clicked on.
-            @Override
-            public void onClick(View view) {
-                handler.removeCallbacks(runnableExerciseSession);
-                if (Build.VERSION.SDK_INT >= 21) {
-                    finishAndRemoveTask();
                 } else {
-                    finish();
-                    System.exit(0);
+                    handler.removeCallbacks(runnableExerciseSession);
+                    if (Build.VERSION.SDK_INT >= 21) {
+                        finishAndRemoveTask();
+                    } else {
+                        finish();
+                        System.exit(0);
+                    }
                 }
             }
-        }); ///////////// END OF exitApp.setOnClickListener
-
+        }); ///////////// END OF pauseApp.setOnClickListener  ////////////////////////////
     }
-
 }
 
