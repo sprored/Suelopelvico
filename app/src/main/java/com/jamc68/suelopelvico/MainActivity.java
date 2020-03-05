@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(runnableExerciseSession, 1000);
                 TextView pauseQuitButton = (TextView) findViewById(R.id.button_pause_quit);
                 pauseQuitButton.setText(getResources().getString(R.string.button_pause));
+                pauseQuitButton.setTextColor(getResources().getColor(R.color.primaryTextColor));
                 pauseQuitButton.setBackgroundColor(getResources().getColor(R.color.primaryLightColor));
             }
         });
@@ -187,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
         ////////// Find the View that shows the pause message
         TextView pauseQuitButton = (TextView) findViewById(R.id.button_pause_quit);
+        pauseQuitButton.setTextScaleX(1.5f);
         // Set a click listener on that View
         pauseQuitButton.setOnClickListener(new View.OnClickListener() {
             // The code in this method will be executed when the numbers category is clicked on.
@@ -201,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
                     exerciseRunning = false;
                     TextView textViewButton = (Button) findViewById(R.id.button_pause_quit);
                     textViewButton.setText(getText(R.string.button_exit));
+                    textViewButton.setTextColor(getResources().getColor(R.color.secondaryTextColor));
                     textViewButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                     onPause();
                 } else if (hasStarted){
