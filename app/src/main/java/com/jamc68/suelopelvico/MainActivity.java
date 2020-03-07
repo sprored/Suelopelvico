@@ -148,16 +148,6 @@ public class MainActivity extends AppCompatActivity {
     };/////////////////////// End of runnable //////////////////////////////////////
 
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mediaPlayer.release();
-        //TODO: Save turnCounter and date. Restore:
-        // If same day -> form saved pause;
-        // else -> from shared prefs
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,16 +185,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (exerciseRunning) {
-                    handler.removeCallbacks(runnableExerciseSession);
-                    TextView textViewMain = (TextView) findViewById(R.id.main_display);
-                    textViewMain.setText(getText(R.string.pause_message).toString());
-                    textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
-                    textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
-                    exerciseRunning = false;
-                    TextView textViewButton = (Button) findViewById(R.id.button_pause_quit);
-                    textViewButton.setText(getText(R.string.button_exit));
-                    textViewButton.setTextColor(getResources().getColor(R.color.secondaryTextColor));
-                    textViewButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                     onPause();
                 } else if (hasStarted){
                     handler.removeCallbacks(runnableExerciseSession);
@@ -218,5 +198,27 @@ public class MainActivity extends AppCompatActivity {
             }
         }); ///////////// END OF pauseApp.setOnClickListener  ////////////////////////////
     }
+
+
+    @Override
+    protected void onPause() {
+        handler.removeCallbacks(runnableExerciseSession);
+        TextView textViewMain = (TextView) findViewById(R.id.main_display);
+        textViewMain.setText(getText(R.string.pause_message).toString());
+        textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
+        textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
+        exerciseRunning = false;
+        TextView textViewButton = (Button) findViewById(R.id.button_pause_quit);
+        textViewButton.setText(getText(R.string.button_exit));
+        textViewButton.setTextColor(getResources().getColor(R.color.secondaryTextColor));
+        textViewButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        mediaPlayer.release();
+
+        super.onPause();
+        //TODO: Save turnCounter and date. Restore:
+        // If same day -> form saved pause;
+        // else -> from shared prefs
+    }
+
 }
 
