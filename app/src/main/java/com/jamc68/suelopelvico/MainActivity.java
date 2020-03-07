@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
                         AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.final_sound);
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.relax);
                     mediaPlayer.start();
                     mediaPlayer.setOnCompletionListener(mCompletionListener);
                 }
@@ -166,12 +166,14 @@ public class MainActivity extends AppCompatActivity {
         mainDisplayTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                exerciseRunning = true;
-                handler.postDelayed(runnableExerciseSession, 1000);
-                TextView pauseQuitButton = (TextView) findViewById(R.id.button_pause_quit);
-                pauseQuitButton.setText(getResources().getString(R.string.button_pause));
-                pauseQuitButton.setTextColor(getResources().getColor(R.color.primaryTextColor));
-                pauseQuitButton.setBackgroundColor(getResources().getColor(R.color.primaryLightColor));
+                if (!exerciseRunning) {
+                    exerciseRunning = true;
+                    handler.postDelayed(runnableExerciseSession, 1000);
+                    TextView pauseQuitButton = (TextView) findViewById(R.id.button_pause_quit);
+                    pauseQuitButton.setText(getResources().getString(R.string.button_pause));
+                    pauseQuitButton.setTextColor(getResources().getColor(R.color.primaryTextColor));
+                    pauseQuitButton.setBackgroundColor(getResources().getColor(R.color.primaryLightColor));
+                }
             }
         });
 
