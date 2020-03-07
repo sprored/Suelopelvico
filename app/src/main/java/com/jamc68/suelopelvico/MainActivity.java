@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         Button mainDisplayButton = findViewById(R.id.main_display);
         mainDisplayButton.setBackgroundColor(getResources().getColor(R.color.primaryLightColor));
         mainDisplayButton.setTextColor(getResources().getColor(R.color.primaryTextColor));
-        mainDisplayButton.setTextScaleX(.9f);
+        //mainDisplayButton.setTextSize(50f);
         mainDisplayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

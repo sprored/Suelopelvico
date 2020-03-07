@@ -8,9 +8,10 @@
     android:background="@color/backgroundApp"
     tools:context=".MainActivity">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/main_display"
-        style="@style/infoText"
+        style="@style/Widget.MaterialComponents.Button"
+        app:cornerRadius="30dp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="40dp"
@@ -20,6 +21,8 @@
         android:elevation="64dp"
         android:gravity="center"
         android:text="@string/primary_intro_message"
+        android:textSize="40sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,8 +48,10 @@
         app:layout_constraintTop_toBottomOf="@+id/main_display"
         app:layout_constraintVertical_bias="0.252" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_pause_quit"
+        style="@style/Widget.MaterialComponents.Button"
+        app:cornerRadius="10dp"
         android:layout_width="120dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
