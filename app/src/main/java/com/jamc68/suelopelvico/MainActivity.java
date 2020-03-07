@@ -155,32 +155,37 @@ public class MainActivity extends AppCompatActivity {
         // To keep the screen from sleeping
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        TextView textViewSecondary = (TextView) findViewById(R.id.secondary_display);
-        textViewSecondary.setText(getString(R.string.secundary_intro_message, totalMinutes));
-
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-        ////////// Find the main view with the start message
-        TextView mainDisplayTextView = (TextView) findViewById(R.id.main_display);
-        // Set a click listener on that View
-        mainDisplayTextView.setOnClickListener(new View.OnClickListener() {
+        /////////////       Main view / button
+        // Set a click listener on main view/button with the start message
+        Button mainDisplayButton = findViewById(R.id.main_display);
+        mainDisplayButton.setBackgroundColor(getResources().getColor(R.color.primaryLightColor));
+        mainDisplayButton.setTextColor(getResources().getColor(R.color.primaryTextColor));
+        mainDisplayButton.setTextScaleX(.9f);
+        mainDisplayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!exerciseRunning) {
                     exerciseRunning = true;
                     handler.postDelayed(runnableExerciseSession, 1000);
-                    TextView pauseQuitButton = (TextView) findViewById(R.id.button_pause_quit);
+                    Button pauseQuitButton = findViewById(R.id.button_pause_quit);
                     pauseQuitButton.setText(getResources().getString(R.string.button_pause));
                     pauseQuitButton.setTextColor(getResources().getColor(R.color.primaryTextColor));
                     pauseQuitButton.setBackgroundColor(getResources().getColor(R.color.primaryLightColor));
                 }
             }
-        });
+        });/////////////    End of Main view / button
 
+
+        TextView textViewSecondary =  findViewById(R.id.secondary_display);
+        textViewSecondary.setText(getString(R.string.secundary_intro_message, totalMinutes));
 
         ////////// Find the View that shows the pause message
-        TextView pauseQuitButton = (TextView) findViewById(R.id.button_pause_quit);
+        Button pauseQuitButton = findViewById(R.id.button_pause_quit);
         pauseQuitButton.setTextScaleX(1.5f);
+        pauseQuitButton.setTextColor(getResources().getColor(R.color.primaryTextColor));
+        pauseQuitButton.setBackgroundColor(getResources().getColor(R.color.primaryLightColor));
         // Set a click listener on that View
         pauseQuitButton.setOnClickListener(new View.OnClickListener() {
             // The code in this method will be executed when the numbers category is clicked on.
@@ -205,15 +210,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         handler.removeCallbacks(runnableExerciseSession);
-        TextView textViewMain = (TextView) findViewById(R.id.main_display);
-        textViewMain.setText(getText(R.string.pause_message).toString());
-        textViewMain.setTextColor(getResources().getColor(R.color.primaryTextColor));
-        textViewMain.setBackgroundColor(getResources().getColor(R.color.introColor));
+        Button mainDisplayButton = findViewById(R.id.main_display);
+        mainDisplayButton.setText(getText(R.string.pause_message).toString());
+        mainDisplayButton.setTextColor(getResources().getColor(R.color.primaryTextColor));
+        mainDisplayButton.setBackgroundColor(getResources().getColor(R.color.introColor));
         exerciseRunning = false;
-        TextView textViewButton = (Button) findViewById(R.id.button_pause_quit);
-        textViewButton.setText(getText(R.string.button_exit));
-        textViewButton.setTextColor(getResources().getColor(R.color.secondaryTextColor));
-        textViewButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        Button pauseQuitButton = findViewById(R.id.button_pause_quit);
+        pauseQuitButton.setText(getText(R.string.button_exit));
+        pauseQuitButton.setTextColor(getResources().getColor(R.color.secondaryTextColor));
+        pauseQuitButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         mediaPlayer.release();
 
         super.onPause();
